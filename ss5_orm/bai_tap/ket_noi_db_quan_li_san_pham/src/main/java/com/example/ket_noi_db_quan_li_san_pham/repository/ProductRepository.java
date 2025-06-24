@@ -47,7 +47,17 @@ public class ProductRepository implements IProductRepository {
 
     @Override
     public void update(Product product) {
-
+        Session session = ConnectionUtil.sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        try {
+            session.update(product); // Cập nhật entity
+            transaction.commit();
+        } catch (Exception e) {
+            transaction.rollback();
+            throw new RuntimeException("Failed to update product: " + e.getMessage(), e);
+        } finally {
+            session.close(); // Đóng session
+        }
     }
 
     @Override
