@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="/layout :: header">
+  <title>Create</title>
+</head>
+<body>
+<div class="container mt-4">
+  <h3 class="bg-success text-white p-3 mb-4 rounded">Add New</h3>
+  <p>
+    <a th:href="@{/songs}" class="btn btn-outline-success">Back to list</a>
+  </p>
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <form th:action="@{/songs/save}" th:object="${song}" method="post" novalidate="novalidate">
+        <input type="hidden" th:field="*{id}">
+
+        <div class="mb-3">
+          <label for="name" class="form-label">Song Name</label>
+          <input type="text" id="name" th:field="*{name}" class="form-control" placeholder="Enter first name use">
+        </div>
+        <small style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></small>
+
+        <div class="mb-3">
+          <label for="artist" class="form-label">Artist</label>
+          <input type="text" id="artist" th:field="*{artist}" class="form-control" placeholder="Enter last name use">
+        </div>
+        <small style="color: red" th:if="${#fields.hasErrors('artist')}" th:errors="*{artist}"></small>
+
+        <div class="mb-3">
+          <label for="genre" class="form-label">Genre</label>
+          <input type="text" id="genre" th:field="*{genre}" class="form-control" placeholder="Enter email use">
+        </div>
+        <small style="color: red" th:if="${#fields.hasErrors('genre')}" th:errors="*{genre}"></small>
+
+        <button type="submit" class="btn btn-success w-100">Save</button>
+      </form>
+
+    </div>
+  </div>
+</div>
+<footer th:replace="/layout :: footer"></footer>
+</body>
+</html>
