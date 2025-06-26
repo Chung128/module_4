@@ -16,10 +16,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @RequestMapping("/blogs")
 public class BlogController {
-
-    @Autowired
     private IBlogService blogService;
     private IAuthorService authorService;
+
+    @Autowired
+    public BlogController(IBlogService blogService, IAuthorService authorService) {
+        this.blogService = blogService;
+        this.authorService = authorService;
+    }
 
     @GetMapping("")
     public String showList(Model model){
@@ -29,6 +33,7 @@ public class BlogController {
 
     @GetMapping("create")
     public  String create(Model model){
+        model.addAttribute("authors",authorService.findAll());
         model.addAttribute("blog",new MyBlog());
         return "create";
     }
@@ -62,6 +67,7 @@ public class BlogController {
 
     @GetMapping("{id}/detail")
     public String detail(@PathVariable int id ,Model model){
+        model.addAttribute("author",blogService.findById(id).getAuthor());
         model.addAttribute("blog",blogService.findById(id));
         return "detail";
     }

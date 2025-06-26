@@ -40,6 +40,10 @@ public class CalculatorController {
         } catch (ArithmeticException e) {
             model.addAttribute("error", e.getMessage());
         }
+//        double result = calculatorService.calculate(number1, number2, operation);
+//        model.addAttribute("result", result);
+//        model.addAttribute("operation", operation);
+
         return "calculator";
     }
 }

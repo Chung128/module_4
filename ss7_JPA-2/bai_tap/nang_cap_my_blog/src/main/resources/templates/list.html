@@ -34,8 +34,8 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="row,cus:${blogPage.content}">
-          <td th:text="${cus.count}"></td>
+        <tr th:each="row,blog:${blogPage.content}">
+          <td th:text="${blog.count}"></td>
           <td th:text="${row.getTitle()}"></td>
           <td th:text="${row.getAuthor().getUsername()}"></td>
           <td th:text="${row.getCreateAt()}"></td>

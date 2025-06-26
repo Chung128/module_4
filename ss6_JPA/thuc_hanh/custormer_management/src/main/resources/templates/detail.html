@@ -4,28 +4,24 @@
   <title>View Product</title>
 </head>
 <body>
-<h3>View Product</h3>
+<h3>View Customer</h3>
 
 <p>
-  <a th:href="@{/products}">Back to product list</a>
+  <a th:href="@{/customers}">Back to customer list</a>
 </p>
 
 <div id="form">
   <div class="cus-detail">
     <label><strong>Name:</strong></label>
-    <span th:text="${product.name}"></span>
+    <span th:text="${customer.name}"></span>
   </div>
   <div class="cus-detail">
-    <label><strong>Price:</strong></label>
-    <span th:text="${product.price}"></span>
+    <label><strong>Email:</strong></label>
+    <span th:text="${customer.email}"></span>
   </div>
   <div class="cus-detail">
-    <label><strong>Description:</strong></label>
-    <span th:text="${product.description}"></span>
-  </div>
-  <div class="cus-detail">
-    <label><strong>Manufacture:</strong></label>
-    <span th:text="${product.manufacture}"></span>
+    <label><strong>Address:</strong></label>
+    <span th:text="${customer.address}"></span>
   </div>
 </div>
 

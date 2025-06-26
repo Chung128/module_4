@@ -1,10 +1,62 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="/layout :: head">
   <meta charset="UTF-8">
-  <title>$Title$</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>ListProducts</title>
 </head>
 <body>
-$END$
+<h3>List</h3>
+<form th:action="@{/customers}" method="get">
+  <input type="text" name="name" placeholder="Nhập tên ..." th:value="${name}"/>
+  <button type="submit">Search</button>
+</form>
+
+<p>
+  <a th:href="@{/customers/create}">
+    Add new customer
+  </a>
+</p>
+<!--để nguyên cái products này để khỏi sửa layout-->
+<table id="products">
+  <thead>
+  <tr>
+    <th>STT</th>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Address</th>
+    <th>Action</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="row,cus:${customerPage.content}">
+    <td th:text="${cus.count}"></td>
+    <td th:text="${row.getName()}"></td>
+    <td th:text="${row.getEmail()}"></td>
+    <td th:text="${row.getAddress()}"></td>
+    <td>
+      <a th:href="@{/customers/{id}/edit(id=${row.getId()})}">Update</a>
+      <a th:href="@{/customers/{id}/delete(id=${row.id})}"
+         onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm ?')">
+        Delete
+      </a>
+      <a th:href="@{/customers/{id}/detail(id=${row.getId()})}">Detail</a>
+    </td>
+  </tr>
+  </tbody>
+</table>
+<a th:if="${customerPage.hasPrevious()}" th:href="@{/customers(page=${customerPage.number -1})}">Trước</a>
+<span th:text="${customerPage.number+1}"></span>/<span th:text="${customerPage.totalPages}"></span>
+<a th:if="${customerPage.hasNext()}" th:href="@{/customers(page=${customerPage.number +1})}">Sau</a>
+
+
+<div class="notify">
+  <div th:if="${success}">
+    <span th:text="${success}"></span>
+  </div>
+</div>
+
+<footer th:replace="/layout :: footer"></footer>
 </body>
 </html>

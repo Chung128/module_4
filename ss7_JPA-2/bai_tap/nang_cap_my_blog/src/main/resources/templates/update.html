@@ -25,14 +25,14 @@
                     <label for="author" class="form-label">Author</label>
                     <select th:field="*{author}" id="author" class="form-select">
                         <option value="" disabled>--Select Author--</option>
-                        <option th:each="authors: ${authors}" th:value="${authors.id}" th:text="${authors.username}"></option>
+                        <option th:each="author: ${authors}" th:value="${author.id}" th:text="${author.username}"></option>
                     </select>
                 </div>
                 <div class="mb-3">
                     <label for="category" class="form-label">Category</label>
                     <select th:field="*{category}" id="category" class="form-select">
                         <option value="" disabled>--Select Category--</option>
-                        <option th:each="category: ${category}" th:value="${category.id}" th:text="${category.name}"></option>
+                        <option th:each="category: ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
                     </select>
                 </div>
                 <div class="mb-3">

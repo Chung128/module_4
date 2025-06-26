@@ -58,7 +58,7 @@ public class BlogController {
 
     @GetMapping("create")
     public  String create( Model model){
-        model.addAttribute("category",categoryService.findAll());
+        model.addAttribute("categories",categoryService.findAll());
         model.addAttribute("authors",authorService.findAll());
         model.addAttribute("blog",new MyBlog());
         return "create";
@@ -73,6 +73,8 @@ public class BlogController {
 
     @GetMapping("{id}/edit")
     public String update(@PathVariable int id,Model model){
+        model.addAttribute("categories",categoryService.findAll());
+        model.addAttribute("authors",authorService.findAll());
         model.addAttribute("blog",blogService.findById(id));
         return "update";
     }
@@ -93,8 +95,8 @@ public class BlogController {
 
     @GetMapping("{id}/detail")
     public String detail(@PathVariable int id ,Model model){
-        model.addAttribute("category",categoryService.findById(id));
-        model.addAttribute("author",blogService.findById(id).getAuthor());
+        model.addAttribute("categories",categoryService.findById(id));
+        model.addAttribute("authors",blogService.findById(id).getAuthor());
         model.addAttribute("blog",blogService.findById(id));
         return "detail";
     }

@@ -69,7 +69,7 @@ public class ProductRepository implements IProductRepository {
     public List<Product> findByName(String name) {
         Session session= ConnectionUtil.sessionFactory.openSession();
         TypedQuery<Product> query=session.createNativeQuery("select * from products where name like :name",Product.class);
-        Product products=query.setParameter(name,"%"+name+"%").getSingleResult();
+        Product products=query.setParameter("name","%"+name+"%").getSingleResult();
         return (List<Product>) products;
     }
 }

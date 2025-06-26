@@ -15,7 +15,7 @@ import lombok.Setter;
 @Table(name = "authors")
 public class Author {
     @Id
-    private String usename;
-    private String pasword;
-
+    private int id;
+    private String username;
+    private String password;
 }

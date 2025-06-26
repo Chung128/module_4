@@ -29,7 +29,7 @@
   <tr th:each="row,cus:${blogs}">
     <td th:text="${cus.count}"></td>
     <td th:text="${row.getTitle()}"></td>
-    <td th:text="${row.getAuthor()}"></td>
+    <td th:text="${row.getAuthor().getUsername()}"></td>
     <td th:text="${row.getCreateAt()}"></td>
     <td>
       <a th:href="@{/blogs/{id}/edit(id=${row.getId()})}">Update</a>

@@ -22,8 +22,9 @@ public class MyBlog {
     private String title; //tiêu đề
     private String content;  //nội dung bài viết
 
-//    @ManyToOne
-//    @JoinColumn(name = "usename",unique = true)
-    private String author;   //tên tác giả
+    @ManyToOne
+    @JoinColumn(name = "id_author")
+    private Author author;   //tên tác giả
     private LocalDate createAt; //ngày tạo
+
 }
