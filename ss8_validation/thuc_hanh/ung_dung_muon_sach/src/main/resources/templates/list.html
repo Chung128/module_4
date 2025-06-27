@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="/layout :: header">
+  <title>List</title>
+</head>
+<body>
+<div class="container mt-4">
+  <h3 class="bg-success text-white p-3 mb-4 rounded"> List</h3>
+
+  <!-- Nút điều hướng -->
+  <div class="d-flex gap-2 mb-4">
+    <a th:href="@{/books/create}" class="btn btn-primary">Add new</a>
+  </div>
+
+  <!-- Bảng danh sách -->
+  <div class="card shadow-sm">
+    <div class="card-body p-0">
+      <table id="products" class="table table-hover table-bordered mb-0">
+        <thead class="table-success">
+        <tr>
+          <th>STT</th>
+          <th>Tiêu đề</th>
+          <th>Mô tả</th>
+          <th>Số lượng</th>
+          <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="row,book:${books}">
+          <td th:text="${book.count}"></td>
+          <td th:text="${row.getTitle()}"></td>
+          <td th:text="${row.getDescription()}"></td>
+          <td th:text="${row.getNumber()}"></td>
+          <td>
+            <a th:href="@{/books/{id}/edit(id=${row.getId()})}" class="btn btn-sm btn-outline-primary">Update</a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!-- Thông báo -->
+  <div class="notify mt-3">
+    <div th:if="${success}" class="alert alert-success">
+      <span th:text="${success}"></span>
+    </div>
+  </div>
+</div>
+<footer th:replace="/layout :: footer"></footer>
+</body>
+</html>

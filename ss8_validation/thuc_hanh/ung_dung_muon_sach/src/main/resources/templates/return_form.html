@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head><title>Trả sách</title></head>
+<body>
+<h1> Trả sách</h1>
+
+<form action="/books/return" method="post">
+  <label>Nhập mã mượn sách:</label>
+  <input type="text" name="code" required maxlength="5">
+  <button type="submit">Trả</button>
+</form>
+
+<a href="/books"> Về danh sách</a>
+</body>
+</html>
