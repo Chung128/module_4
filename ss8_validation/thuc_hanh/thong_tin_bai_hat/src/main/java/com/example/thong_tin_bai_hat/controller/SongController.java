@@ -27,6 +27,7 @@ public class SongController {
     @GetMapping("")
     public String showList(Model model){
         model.addAttribute("songs",songService.findAll());
+        System.out.println("chạy trướcq");
         return "list";
     }
 
