@@ -16,7 +16,8 @@ public class BorrowCodeService implements IBorrowCodeService {
     private IBorrowCodeRepository borrowCodeRepository;
 
     @Autowired
-    public BorrowCodeService(IBorrowCodeRepository borrowCodeRepository) {
+    public BorrowCodeService(IBookService bookService, IBorrowCodeRepository borrowCodeRepository) {
+        this.bookService = bookService;
         this.borrowCodeRepository = borrowCodeRepository;
     }
 
@@ -60,7 +61,7 @@ public class BorrowCodeService implements IBorrowCodeService {
     @Override
     public void returnBook(String code) {
         BorrowCode borrowCode = borrowCodeRepository.findByCode(code)
-                .orElseThrow(new BorrowCodeNotFoundSupplier(code)); // 👈 KHÔNG cần dùng `->`
+                .orElseThrow(new BorrowCodeNotFoundSupplier(code)); //  KHÔNG cần dùng `->`
 
         if (!borrowCode.isReturned()) {
             Book book = borrowCode.getBook();
@@ -68,7 +69,7 @@ public class BorrowCodeService implements IBorrowCodeService {
             bookService.save(book);
 
             borrowCode.setReturned(true);
-            borrowCodeRepository.save(borrowCode);
+            borrowCodeRepository.delete(borrowCode);
         }
     }
 

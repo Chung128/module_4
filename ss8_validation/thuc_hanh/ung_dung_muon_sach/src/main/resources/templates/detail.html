@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="/layout :: header">
+  <title>Detail</title>
+</head>
+<body>
+<div class="container mt-4">
+  <h3 class="bg-success text-white p-3 mb-4 rounded">Book Detail</h3>
+  <p>
+    <a th:href="@{/books}" class="btn btn-outline-success">Back to list</a>
+  </p>
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <h1> Thông tin sách</h1>
+
+      <p><strong>ID:</strong> <span th:text="${book.id}"></span></p>
+      <p><strong>Tên sách:</strong> <span th:text="${book.title}"></span></p>
+      <p><strong>Mô tả:</strong> <span th:text="${book.description}"></span></p>
+      <p><strong>Số lượng còn:</strong> <span th:text="${book.number}"></span></p>
+
+        <form th:action="@{'/books/' + ${book.id} + '/borrow'}" method="post">
+            <button type="submit">Mượn sách</button>
+        </form>
+
+<!--        <form th:action="@{/books/{id}/borrow}" th:object="${book}" method="post" novalidate="novalidate">-->
+<!--      <form th:action="@{'/books/' + ${book.id} + '/borrow'}" method="post">-->
+<!--        <button type="submit" th:disabled="${book.number == 0}"> Mượn sách</button>-->
+      </form>
+      <div class="notify mt-3">
+        <div th:if="${success}" class="alert alert-success">
+          <span th:text="${success}"></span>
+        </div>
+      </div>
+      <div class="notify mt-3">
+        <div th:if="${error}" class="alert alert-success">
+          <span th:text="${error}"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<footer th:replace="/layout :: footer"></footer>
+</body>
+</html>

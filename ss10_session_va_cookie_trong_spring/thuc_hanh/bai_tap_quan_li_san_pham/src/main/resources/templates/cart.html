@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p>
+    <a href="/shop">Shop</a>
+</p>
+<h1>Giỏ hàng</h1>
+<form th:action="@{/shop}" th:object="${cart}" method="post">
+    <h3>Tổng số loại hàng: <span th:text="${cart.countItemQuantity()}"></span></h3>
+    <h3>Tống số sản phầm: <span th:text="${cart.countProductQuantity()}"></span></h3>
+    <table border="1">
+        <tr>
+            <th>Loại hàng</th>
+            <th>Số lượng</th>
+            <th>Giá tiền</th>
+        </tr>
+        <tr th:each="product: ${cart.products}">
+            <td th:text="${product.getKey().name}"></td>
+            <td>
+                <button><a id="decrease_button" th:href="@{/shop/reduce/{id}(id=${product.getKey().id}, action='show')}" th:text="'-'"></a></button>
+                <span th:text="${product.getValue()}"></span>
+                <button><a id="increase_button"
+                           th:href="@{/shop/add/{id}(id=${product.getKey().id}, action='show')}"
+                           th:text="'+'"></a></button>
+            </td>
+            <td th:text="${product.getKey().price}"></td>
+        </tr>
+        <tr>
+            <td>tổng tiền</td>
+            <td></td>
+            <td th:text="${cart.countTotalPayment()}"></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>
