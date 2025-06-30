@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Giỏ hàng</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+          crossorigin="anonymous">
+</head>
+<body>
+<header class="bg-primary text-white p-3 mb-4">
+    <div class="container">
+        <h1 class="h3">Quản lý sản phẩm</h1>
+    </div>
+</header>
+
+<main class="container mb-5">
+    <div class="row">
+        <div class="col">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h1 class="h2">Giỏ hàng</h1>
+                <a href="/shop" class="btn btn-outline-primary">Tiếp tục mua sắm</a>
+            </div>
+            <div class="mb-3">
+                <h4>Tổng số loại hàng: <span th:text="${cart.countItemQuantity()}"></span></h4>
+                <h4>Tổng số sản phẩm: <span th:text="${cart.countProductQuantity()}"></span></h4>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <table class="table table-hover table-bordered">
+                        <thead class="table-light">
+                        <tr>
+                            <th scope="col">Loại hàng</th>
+                            <th scope="col">Số lượng</th>
+                            <th scope="col">Giá tiền</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="product: ${cart.products}">
+                            <td th:text="${product.getKey().name}"></td>
+                            <td>
+                                <div class="d-flex align-items-center justify-content-center">
+                                    <a class="btn btn-outline-secondary btn-sm me-2"
+                                       th:href="@{/shop/reduce/{id}(id=${product.getKey().id}, action='show')}">-</a>
+                                    <span th:text="${product.getValue()}" class="mx-2"></span>
+                                    <a class="btn btn-outline-secondary btn-sm ms-2"
+                                       th:href="@{/shop/add/{id}(id=${product.getKey().id}, action='show')}">+</a>
+                                </div>
+                            </td>
+                            <td th:text="${#numbers.formatDecimal(product.getKey().newPrice, 0, 'POINT', 0, 'COMMA')} + ' Vnđ'"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="fw-bold">Tổng tiền</td>
+                            <td class="fw-bold" th:text="${#numbers.formatDecimal(cart.countTotalPayment(), 0, 'POINT', 0, 'COMMA')} + ' Vnđ'"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Footer -->
+<footer class="bg-light text-center py-3 mt-4">
+    <p class="mb-0">© 2025 CodeGym</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
+</body>
+</html>
