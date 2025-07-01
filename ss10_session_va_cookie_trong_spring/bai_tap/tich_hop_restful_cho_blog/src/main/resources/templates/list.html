@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="/layout :: header">
+  <title>List</title>
+</head>
+<body>
+<div class="container mt-4">
+  <h3 class="bg-success text-white p-3 mb-4 rounded">Content List</h3>
+  <!-- Form tìm kiếm -->
+  <form th:action="@{/blogs}" method="get" class="mb-4">
+    <div class="input-group">
+      <input type="text" name="title" th:value="${title}" placeholder="Nhập title ..." class="form-control">
+      <button type="submit" class="btn btn-success">Search</button>
+    </div>
+  </form>
+
+  <!-- Nút điều hướng -->
+  <div class="d-flex gap-2 mb-4">
+    <a th:href="@{/categories}" class="btn btn-outline-primary">Page category</a>
+    <a th:href="@{/blogs/create}" class="btn btn-primary">Add new content</a>
+  </div>
+
+  <!-- Bảng danh sách -->
+  <div class="card shadow-sm">
+    <div class="card-body p-0">
+      <table id="products" class="table table-hover table-bordered mb-0">
+        <thead class="table-success">
+        <tr>
+          <th>STT</th>
+          <th>Title</th>
+          <th>Author</th>
+          <th>Date created</th>
+          <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="row,blog:${blogPage.content}">
+          <td th:text="${blog.count}"></td>
+          <td th:text="${row.getTitle()}"></td>
+          <td th:text="${row.getAuthor().getUsername()}"></td>
+          <td th:text="${row.getCreateAt()}"></td>
+          <td>
+            <a th:href="@{/blogs/{id}/edit(id=${row.getId()})}" class="btn btn-sm btn-outline-primary">Update</a>
+            <a th:href="@{/blogs/{id}/delete(id=${row.id})}"
+               onclick="return confirm('Bạn có chắc chắn muốn xóa ?')"
+               class="btn btn-sm btn-outline-danger">Delete</a>
+            <a th:href="@{/blogs/{id}/detail(id=${row.getId()})}" class="btn btn-sm btn-outline-info">Detail</a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Thông báo -->
+  <div class="notify mt-3">
+    <div th:if="${success}" class="alert alert-success">
+      <span th:text="${success}"></span>
+    </div>
+  </div>
+</div>
+<footer th:replace="/layout :: footer"></footer>
+</body>
+</html>
