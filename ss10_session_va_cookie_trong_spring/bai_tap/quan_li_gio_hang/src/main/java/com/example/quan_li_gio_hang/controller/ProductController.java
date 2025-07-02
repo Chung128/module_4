@@ -109,7 +109,7 @@ public class ProductController {
     public String delete(@PathVariable Long id, RedirectAttributes redirectAttributes){
         productService.remove(id);
         redirectAttributes.addFlashAttribute("success","Đã xóa thành công");
-        return "shop";
+        return "redirect:/shop";
     }
 
     @GetMapping("create")

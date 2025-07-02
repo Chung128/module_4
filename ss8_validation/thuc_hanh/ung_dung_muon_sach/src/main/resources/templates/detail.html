@@ -21,11 +21,6 @@
         <form th:action="@{'/books/' + ${book.id} + '/borrow'}" method="post">
             <button type="submit">Mượn sách</button>
         </form>
-
-<!--        <form th:action="@{/books/{id}/borrow}" th:object="${book}" method="post" novalidate="novalidate">-->
-<!--      <form th:action="@{'/books/' + ${book.id} + '/borrow'}" method="post">-->
-<!--        <button type="submit" th:disabled="${book.number == 0}"> Mượn sách</button>-->
-      </form>
       <div class="notify mt-3">
         <div th:if="${success}" class="alert alert-success">
           <span th:text="${success}"></span>

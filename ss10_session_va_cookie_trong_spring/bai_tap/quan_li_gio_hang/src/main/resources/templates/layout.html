@@ -10,15 +10,29 @@
         rel="stylesheet"
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
         crossorigin="anonymous">
+<!--  thư viện biểu tượng-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-p0bM++u5od7LkOKYzKbf3XfW8jvZSkbAoLMeKjz0y+88ZcX0Il5r2qEeE4k4DUmWzzJbZ2mAhI2zBg9OeZ1zKg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 </head>
 <body>
 
 <!-- Header chung (nếu cần) -->
-<header class="bg-primary text-white p-3 mb-4">
-  <div class="container">
-    <h1 class="h3">Quản lý sản phẩm</h1>
+<header class="bg-primary text-white py-3 mb-4">
+  <div class="container d-flex justify-content-between align-items-center">
+    <h1 class="h4 m-0">Quản lý sản phẩm</h1>
+
+    <!-- Giỏ hàng có icon + badge -->
+    <a th:href="@{/shop/shopping}" class="btn btn-light position-relative">
+      <i class="fas fa-shopping-cart fa-lg"> 🛒 Giỏ hàng</i>
+      <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+            th:text="${cart.countItemQuantity()}">0</span>
+    </a>
   </div>
 </header>
+
+
 
 <!-- Nội dung chính -->
 <main class="container mb-5">

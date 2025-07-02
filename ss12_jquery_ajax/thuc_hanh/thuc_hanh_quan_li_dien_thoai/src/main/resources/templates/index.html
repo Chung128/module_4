@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<form id="add-smartphone">
+    <h1>Form create</h1>
+    <table>
+        <tr>
+            <td><label for="producer">Producer:</label></td>
+            <td><input type="text" id="producer" placeholder="producer"></td>
+        </tr>
+        <tr>
+            <td><label for="model">Model:</label></td>
+            <td><input type="text" id="model" placeholder="model"></td>
+        </tr>
+        <tr>
+            <td><label for="price">Price:</label></td>
+            <td><input type="text" id="price" placeholder="price"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" value="Add" onclick="addNewSmartPhone()"></td>
+        </tr>
+    </table>
+</form>
+<hr>
+<button onclick="successHandler()">Danh sách</button>
+<div id="smartphoneList"></div>
+<script>
+    function addNewSmartPhone() {
+        //lấy dư liệu từ form
+        let producer = $('#producer').val();
+        let model = $('#model').val();
+        let price = $('#price').val();
+        let newSmartPhone = {
+            producer: producer,
+            model: model,
+            price: price
+        };
+
+        //gọi phương thức ajax
+        $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': "application/json"
+            },
+            type: "POST",
+            data: JSON.stringify(newSmartPhone),
+
+            //tên API
+            url: "http://localhost:8080/api/version1/smartphones",
+
+            //hiển thị  xử lí thành công
+            // success: console.log("success")
+            complete: function (data) {
+                console.log("Success:", data);
+                alert("Smartphone added successfully!");
+            },
+            error: function (err) {
+                console.error("Error:", err);
+                alert("Error occurred while saving smartphone.");
+            }
+        })
+
+    }
+
+    function successHandler() {
+        $.ajax({
+            type: "GET",
+            //tên API
+            url: "http://localhost:8080/api/version1/smartphones",
+            //xử lý khi thành công
+            success: function (data) {
+                // hiển thị danh sách ở đây
+                let content = ' <table id="display-list" border="1"><tr>\n' +
+                    ' <th>Producer</th>\n' +
+                    ' <th>Model</th>\n' +
+                    ' <th>Price</th>\n' +
+                    ' <th>Delete</th>\n' +
+                    ' </tr>';
+                for (let i = 0; i < data.length; i++) {
+                    content += getSmartphone(data[i]);
+                }
+                content += "</table>"
+                document.getElementById('smartphoneList').innerHTML = content;
+            }
+        });
+    }
+    function getSmartphone(phone) {
+        return `
+        <tr>
+            <td>${phone.producer}</td>
+            <td>${phone.model}</td>
+            <td>${phone.price}</td>
+            <td><button onclick="deleteSmartphone(${phone.id})">Delete</button></td>
+        </tr>`;
+    }
+    function deleteSmartphone(id) {
+        $.ajax({
+            type: "DELETE",
+            url: "http://localhost:8080/api/version1/smartphones/" + id,
+            success: function () {
+                alert("Deleted successfully!");
+                successHandler(); // load lại danh sách
+            },
+            error: function (err) {
+                alert("Failed to delete.");
+                console.error(err);
+            }
+        });
+    }
+
+</script>
+</body>
+</html>
+
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Title</title>-->
+<!--    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
+<!--</head>-->
+<!--<body>-->
+<!--<form id="add-smartphone">-->
+<!--    <h1>Form create</h1>-->
+<!--    <table>-->
+<!--        <tr>-->
+<!--            <td><label for="producer">Producer:</label></td>-->
+<!--            <td><input type="text" id="producer" placeholder="producer"></td>-->
+<!--        </tr>-->
+<!--        <tr>-->
+<!--            <td><label for="model">Model:</label></td>-->
+<!--            <td><input type="text" id="model" placeholder="model"></td>-->
+<!--        </tr>-->
+<!--        <tr>-->
+<!--            <td><label for="price">Price:</label></td>-->
+<!--            <td><input type="text" id="price" placeholder="price"></td>-->
+<!--        </tr>-->
+<!--        <tr>-->
+<!--            <td></td>-->
+<!--            <td><input type="submit" value="Add" onclick="addNewSmartPhone(event)"></td>-->
+<!--        </tr>-->
+<!--    </table>-->
+<!--</form>-->
+
+<!--<hr>-->
+
+<!--&lt;!&ndash; ✅ Nút danh sách tách riêng, không bị ghi đè &ndash;&gt;-->
+<!--<button onclick="successHandler()">Danh sách</button>-->
+
+<!--&lt;!&ndash; ✅ Danh sách sẽ hiển thị tại đây &ndash;&gt;-->
+<!--<div id="smartphoneList"></div>-->
+
+<!--<script>-->
+<!--    function addNewSmartPhone(event) {-->
+<!--        event.preventDefault(); // chặn reload form-->
+
+<!--        let producer = $('#producer').val();-->
+<!--        let model = $('#model').val();-->
+<!--        let price = $('#price').val();-->
+<!--        let newSmartPhone = {-->
+<!--            producer: producer,-->
+<!--            model: model,-->
+<!--            price: price-->
+<!--        };-->
+
+<!--        $.ajax({-->
+<!--            headers: {-->
+<!--                'Accept': 'application/json',-->
+<!--                'Content-Type': "application/json"-->
+<!--            },-->
+<!--            type: "POST",-->
+<!--            data: JSON.stringify(newSmartPhone),-->
+<!--            url: "http://localhost:8080/api/version1/smartphones",-->
+<!--            success: function () {-->
+<!--                alert("Smartphone added successfully!");-->
+<!--                successHandler(); // load lại danh sách sau khi thêm-->
+<!--            },-->
+<!--            error: function (err) {-->
+<!--                console.error("Error:", err);-->
+<!--                alert("Error occurred while saving smartphone.");-->
+<!--            }-->
+<!--        });-->
+<!--    }-->
+
+<!--    function successHandler() {-->
+<!--        $.ajax({-->
+<!--            type: "GET",-->
+<!--            url: "http://localhost:8080/api/version1/smartphones",-->
+<!--            success: function (data) {-->
+<!--                let content = '<table id="display-list" border="1"><tr>' +-->
+<!--                    '<th>Producer</th>' +-->
+<!--                    '<th>Model</th>' +-->
+<!--                    '<th>Price</th>' +-->
+<!--                    '<th>Delete</th>' +-->
+<!--                    '</tr>';-->
+<!--                for (let i = 0; i < data.length; i++) {-->
+<!--                    content += getSmartphone(data[i]);-->
+<!--                }-->
+<!--                content += "</table>";-->
+<!--                document.getElementById('smartphoneList').innerHTML = content;-->
+<!--            }-->
+<!--        });-->
+<!--    }-->
+
+<!--    function getSmartphone(phone) {-->
+<!--        return `-->
+<!--        <tr>-->
+<!--            <td>${phone.producer}</td>-->
+<!--            <td>${phone.model}</td>-->
+<!--            <td>${phone.price}</td>-->
+<!--            <td><button onclick="deleteSmartphone(${phone.id})">Delete</button></td>-->
+<!--        </tr>-->
+<!--        `;-->
+<!--    }-->
+
+<!--    function deleteSmartphone(id) {-->
+<!--        $.ajax({-->
+<!--            type: "DELETE",-->
+<!--            url: "http://localhost:8080/api/smartphones/" + id,-->
+<!--            success: function () {-->
+<!--                alert("Deleted successfully!");-->
+<!--                successHandler(); // load lại danh sách-->
+<!--            },-->
+<!--            error: function (err) {-->
+<!--                alert("Failed to delete.");-->
+<!--                console.error(err);-->
+<!--            }-->
+<!--        });-->
+<!--    }-->
+<!--</script>-->
+<!--</body>-->
+<!--</html>-->
