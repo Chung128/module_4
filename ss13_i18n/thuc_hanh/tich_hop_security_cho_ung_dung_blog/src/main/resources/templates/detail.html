@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="/layout :: header">
+  <title>View</title>
+</head>
+<body>
+<div class="container mt-4">
+  <h3 class="bg-success text-white p-3 mb-4 rounded">Content Detail</h3>
+  <p>
+    <a th:href="@{/blogs}" class="btn btn-outline-success">Back to list</a>
+  </p>
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <div class="row mb-3">
+        <label class="col-sm-3 col-form-label fw-bold">Title:</label>
+        <div class="col-sm-9">
+          <span th:text="${blog.title}" class="form-control-plaintext"></span>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <label class="col-sm-3 col-form-label fw-bold">Content:</label>
+        <div class="col-sm-9">
+          <span th:text="${blog.content}" class="form-control-plaintext"></span>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <label class="col-sm-3 col-form-label fw-bold">Author:</label>
+        <div class="col-sm-9">
+          <span th:text="${authors.username}" class="form-control-plaintext"></span>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <label class="col-sm-3 col-form-label fw-bold">Category:</label>
+        <div class="col-sm-9">
+          <span th:text="${categories.name}" class="form-control-plaintext"></span>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <label class="col-sm-3 col-form-label fw-bold">Date created:</label>
+        <div class="col-sm-9">
+          <span th:text="${blog.createAt}" class="form-control-plaintext"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<footer th:replace="/layout :: footer"></footer>
+</body>
+</html>

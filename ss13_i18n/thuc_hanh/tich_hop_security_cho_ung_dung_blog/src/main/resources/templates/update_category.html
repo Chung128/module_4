@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="/layout :: header">
+    <title>Update Category</title>
+</head>
+<body>
+<div class="container mt-4">
+    <h3 class="bg-success text-white p-3 mb-4 rounded">Update Category</h3>
+    <p>
+        <a th:href="@{/categories}" class="btn btn-outline-success">Back to list</a>
+    </p>
+    <div class="card shadow-sm" style="max-width: 400px; margin: auto;">
+        <div class="card-body">
+            <form th:action="@{/categories/update}" th:object="${category}" method="post" novalidate="novalidate">
+                <input type="hidden" th:field="*{id}">
+                <div class="mb-3">
+                    <label for="category" class="form-label">Category</label>
+                    <input type="text" id="category" th:field="*{name}" class="form-control" placeholder="Enter category name">
+                </div>
+                <button type="submit" class="btn btn-success w-100">Edit</button>
+            </form>
+        </div>
+    </div>
+</div>
+<footer th:replace="/layout :: footer"></footer>
+</body>
+</html>

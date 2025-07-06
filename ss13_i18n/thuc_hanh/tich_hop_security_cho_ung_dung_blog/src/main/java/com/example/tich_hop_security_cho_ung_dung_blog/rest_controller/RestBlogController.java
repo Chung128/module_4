@@ -1,8 +1,8 @@
-package com.example.tich_hop_ajax_cho_ung_dung_blog.rest_controller;
+package com.example.tich_hop_security_cho_ung_dung_blog.rest_controller;
 
 
-import com.example.tich_hop_ajax_cho_ung_dung_blog.model.MyBlog;
-import com.example.tich_hop_ajax_cho_ung_dung_blog.service.IBlogService;
+import com.example.tich_hop_security_cho_ung_dung_blog.model.MyBlog;
+import com.example.tich_hop_security_cho_ung_dung_blog.service.IBlogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -28,12 +28,13 @@ public class RestBlogController {
     public ResponseEntity<Page<MyBlog>> findAllBlogAndPaging(
             @RequestParam(required = false, defaultValue = "") String title,
             @RequestParam(required = false, defaultValue = "0") int page,
+            @RequestParam(required = false, defaultValue = "") int id,
             @RequestParam(required = false, defaultValue = "3") int size) {
 
         Pageable pageable = PageRequest.of(page, size);
         Page<MyBlog> blogPage;
         if (title != null && !title.trim().isEmpty()) {
-            blogPage = blogService.searchByName(title, pageable);
+            blogPage = blogService.searchByName(title,id ,pageable);
         } else {
             blogPage = blogService.findAll(pageable);
         }
